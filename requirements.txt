@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+Flask-WTF
+flask-login
+werkzeug
+pandas
+pymysql
+redis
+python-dotenv

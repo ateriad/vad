@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  python:
+    build: .
+    ports:
+      - ${PYTHON_EXPOSED_PORT:-0}:5000
+    volumes:
+      - ./:/app
+    restart: always
+    depends_on:
+      - redis
+
+  mysql:
+    image: mysql:5.7.31
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-app}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-p@ssw0rd1}
+    ports:
+      - 127.0.0.1:${DB_EXPOSED_PORT:-0}:3306
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+
+  redis:
+    image: redis:5.0-alpine3.8
+    restart: unless-stopped
+    ports:
+      - ${REDIS_EXPOSED_PORT:-0}:6379
+
