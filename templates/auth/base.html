@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="loading" lang="fa" data-textdirection="rtl" dir="rtl">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>va | {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon"
+          href="{{ url_for('static', filename='dashboard/images/ico/favicon.ico') }}">
+    <meta name="theme-color" content="#5A8DEE">
+    <meta name="csrf-token" content="">
+    <meta name="success" content="{{ session['success'] }}">
+    <meta name="error" content="{{ session['error'] }}">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/vendors/css/extensions/dragula.min.css') }}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/colors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/components.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/themes/dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/toastr/toastr.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/toastr/custom.toast.css') }}">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/core/menu/menu-types/horizontal-menu.css') }}">
+    {% block style %}{% endblock %}
+    <!-- END: Page CSS-->
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="horizontal-layout horizontal-menu navbar-sticky 1-column footer-static bg-full-screen-image  blank-page blank-page"
+      data-open="hover" data-menu="horizontal-menu" data-col="1-column">
+<!-- BEGIN: Content-->
+{% block content %}{% endblock %}
+<!-- END: Content-->
+
+<!-- BEGIN: Vendor JS-->
+<script src="{{ url_for('static', filename='dashboard/vendors/js/vendors.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/toastr/toastr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/toastr/custom.toastr.js') }}"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="{{ url_for('static', filename='dashboard/vendors/js/ui/jquery.sticky.js') }}"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="{{ url_for('static', filename='dashboard/js/scripts/configs/horizontal-menu.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/core/app-menu.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/core/app.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/components.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/footer.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/main.js') + '?v1' }}"></script>
+<!-- END: Theme JS-->
+
+{% block js %}{% endblock %}
+
+</body>
+</html>

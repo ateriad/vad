@@ -1,0 +1,148 @@
+{% extends "auth/base.html" %}
+
+{% block title %}
+ورود / ثبت‌نام
+{% endblock %}
+
+{% block content %}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper" style="margin-top: 1rem !important;">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><!-- reset password start -->
+            <section class="row flexbox-container">
+                <div class="col-xl-7 col-10">
+                    <div class="card bg-authentication mb-0">
+                        <div class="row m-0">
+                            <!-- left section-login -->
+                            <div class="col-md-6 col-12 px-0">
+                                <div
+                                        class="card disable-rounded-right d-flex justify-content-center mb-0 p-2 h-100">
+                                    <div class="card-header pb-1">
+                                        <div class="card-title">
+                                            <h4 class="text-center mb-2">ورود/ثبت‌نام</h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <div class="form-group mt-2 mb-4" dir="rtl">
+                                                <div class="form-group">
+                                                    <input id="cellphone" type="text"
+                                                           class="form-control ltr text-left"
+                                                           title=""
+                                                           placeholder="شماره همراه"
+                                                           required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button id="request"
+                                                            class="btn btn-primary glow position-relative w-100">
+                                                      ارسال کد
+                                                    </button>
+                                                </div>
+                                                <div class="form-group d-none">
+                                                    <input id="otp" type="number" class="form-control ltr text-left"
+                                                           title=""
+                                                           placeholder="کد"
+                                                           required>
+                                                </div>
+                                                <div class="form-group d-none">
+                                                    <button id="submit"
+                                                            class="btn btn-primary glow position-relative w-100">
+                                                        sign_in_up
+                                                        <i id="icon-arrow" class="bx bx-left-arrow-alt"></i>
+                                                    </button>
+                                                    <p class="text-center text-muted mt-3">
+                                                        <span>remain_time_colon</span>
+                                                        <span id="time">60</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- right section image -->
+                            <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                                <img class="img-fluid"
+                                     src="{{ url_for('static',  filename='dashboard/images/pages/login.png') }}"
+                                     alt="branding logo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static',  filename='vendor/notify/notify.min.js') }}"></script>
+<script>
+        $(document).ready(function () {
+            $('#request').click(function () {
+                $.ajax({
+                    url: '{{ url_for('auth.otp_request') }}',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        cellphone: $('#cellphone').val(),
+                    }
+                }).done((response) => {
+                    $('#request').parent().hide();
+                    $('#otp').parent().removeClass('d-none');
+                    $('#submit').parent().removeClass('d-none');
+                    $('#time').html(response['expires_after']);
+                    successToastr(response['message']);
+
+                    setInterval(() => {
+                        let t = $('#time');
+                        if (parseInt(t.html()) > 0) {
+                            t.html(parseInt(t.html()) - 1);
+                        } else if (t.html() === '0') {
+                            t.html('');
+                            window.location.reload();
+                        }
+                    }, 1000);
+                }).fail(e => {
+                    console.log(e);
+                    if (e.status === 422) {
+                        let errors = e['responseJSON']['errors'];
+                        for (let i in errors) {
+                            errorToastr(errors[i])
+                        }
+                    } else {
+                        errorToastr(e['responseJSON']['message'])
+                    }
+                });
+            });
+
+            $('#submit').click(function () {
+                $.ajax({
+                    url: '{{ url_for('auth.otp') }}',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        cellphone: $('#cellphone').val(),
+                        otp: $('#otp').val(),
+                        session: true,
+                    }
+                }).done(response => {
+                    window.location = response['redirect'];
+                }).fail(e => {
+                    if (e.status === 422) {
+                        let errors = e['responseJSON']['errors'];
+                        for (let i in errors) {
+                            errorToastr(errors[i])
+                        }
+                    } else {
+                        errorToastr(e['responseJSON']['message'])
+                    }
+                });
+            });
+        });
+
+
+</script>
+{% endblock %}

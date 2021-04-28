@@ -1,0 +1,28 @@
+{
+    "processing": "در حال پردازش",
+    "loadingRecords": "در حال بارگیری",
+    "search": "جستجو : ",
+    "lengthMenu": "نمایش _MENU_ سطر",
+    "info": "نمایش  _START_ تا _END_ از _TOTAL_ ",
+    "infoEmpty": "موردی یافت نشد",
+    "zeroRecords": "موردی با این مشخصات وجود ندارد",
+    "infoFiltered": "اعمال شده روی _MAX_",
+    "emptyTable": "هیچ داده ای در جدول وجود ندارد",
+    "infoPostFix": "",
+    "paginate": {
+        "first": "ابتدا",
+        "previous": "قبلی",
+        "next": "بعدی",
+        "last": "انتها"
+    },
+    "select": {
+        "rows": {
+            "_": " -  %d مورد انتخاب شده ",
+            "0": ""
+        }
+    },
+    "aria": {
+        "sortAscending":  ": فعال سازی نمایش به صورت صعودی",
+        "sortDescending": ": فعال سازی نمایش به صورت نزولی"
+    }
+}
