@@ -2,8 +2,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from configs.app import Config
+import redis
 
 db = SQLAlchemy()
+
+redis = redis.Redis(host=Config.REDIS_HOST, port=Config.REDIS_PORT)
 
 
 def create_app():

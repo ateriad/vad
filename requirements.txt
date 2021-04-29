@@ -7,3 +7,6 @@ pandas
 pymysql
 redis
 python-dotenv
+MarkupSafe
+itsdangerous
+suds-jurko

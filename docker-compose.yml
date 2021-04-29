@@ -11,6 +11,7 @@ services:
     restart: always
     depends_on:
       - redis
+      - mysql
 
   mysql:
     image: mysql:5.7.31
