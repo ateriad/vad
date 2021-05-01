@@ -10,16 +10,22 @@ def index():
     return render_template('index.html')
 
 
-@main.route('/profile')
+@main.route('/dashboard/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('dashboard/profile.html', current_user=current_user)
 
 
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', name=current_user.name)
+    return render_template('dashboard/index.html', current_user=current_user)
+
+
+@main.route('/dashboard/playout')
+@login_required
+def playout():
+    return render_template('dashboard/playout.html', current_user=current_user)
 
 
 app = create_app()
