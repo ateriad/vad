@@ -9,4 +9,4 @@ def otp_store(cellphone):
 
 
 def otp_check(cellphone, code):
-    return redis.get('otp:key_' + cellphone) == code
+    return int(redis.get('otp:key_' + cellphone)) == int(code)

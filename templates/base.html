@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<section class="hero is-fullheight" style="background-color:#C4FCEF;">
+<section class="hero is-fullheight" style="background-color:#f5467d;">
 
     <div class="hero-head">
         <nav class="navbar">
@@ -22,16 +22,13 @@
                             Home
                         </a>
                         {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('main.profile') }}" class="navbar-item">
-                            Profile
+                        <a href="{{ url_for('main.dashboard') }}" class="navbar-item">
+                            داشبورد
                         </a>
                         {% endif %}
                         {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.sign_in') }}" class="navbar-item">
-                            Login
-                        </a>
-                        <a href="{{ url_for('auth.sign_up') }}" class="navbar-item">
-                            Sign Up
+                        <a href="{{ url_for('auth.otp') }}" class="navbar-item">
+                            ورود
                         </a>
                         {% endif %}
                         {% if current_user.is_authenticated %}
