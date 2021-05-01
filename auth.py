@@ -5,6 +5,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from __init__ import db
 from services.otp import otp_store, otp_check
 from services.sms import send_sms
+from os import environ
 
 auth = Blueprint('auth', __name__)
 
@@ -14,12 +15,19 @@ def otp_request():
     cellphone = request.form.get('cellphone')
     code = otp_store(cellphone)
 
-    send_sms(cellphone, 'Code: ' + str(code))
+    if environ.get('FLASK_ENV') == 'production':
+        body = 'کد ورود به تبلیغات مجازی' + '\n' + 'Code: ' + str(code)
+        send_sms(cellphone, body)
 
-    return jsonify({
-        'message': 'کد ارسال شد' + str(code),
-        'expires_after': 120,
-    })
+        return jsonify({
+            'message': 'کد ارسال شد',
+            'expires_after': 120,
+        })
+    else:
+        return jsonify({
+            'message': str(code),
+            'expires_after': 120,
+        })
 
 
 @auth.route('/otp', methods=['GET', 'POST'])
