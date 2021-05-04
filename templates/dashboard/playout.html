@@ -1,12 +1,75 @@
 {% extends "dashboard/base.html" %}
 
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/basic.min.css') }}">
+{% endblock %}
+
 {% block title %}
     تنظیمات
 {% endblock %}
 
 {% block content %}
+    <section>
+        <form>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card invoice-action-wrapper shadow-none border">
+                        <div class="card-body">
+                            <h2>استریم ورودی</h2>
 
+                            <fieldset class="form-group">
+                                <label for="input_stream_url">stream url</label>
+                                <input type="text" class="form-control" id="input_stream_url"
+                                       placeholder="آدرس استریم را وارد کنید">
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card invoice-action-wrapper shadow-none border">
+                        <div class="card-body">
+                            <h2>استریم خروجی</h2>
+
+                            <fieldset class="form-group">
+                                <label for="output_stream_url">stream url</label>
+                                <input type="text" class="form-control" id="output_stream_url"
+                                       placeholder="آدرس استریم را وارد کنید">
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card invoice-action-wrapper shadow-none border">
+                        <div class="card-body">
+                            <h2>مشخصات تبلیغ</h2>
+
+                            <div id="dropzone" style="min-height: unset; padding: 2px 4px;"
+                                 class="custom-dropzone needsclick border-gray-200 border-dashed dz-clickable .border-gray-200"
+                                 data-action="{{ url_for('main.upload_file') }}">
+                                <div class="dz-message">
+                                    <div><i class="fas fa-plus"></i></div>
+                                    <div>انتخاب کنید</div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="ad_path" id="ad_path">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
 {% endblock %}
 
 {% block js %}
+    <script src="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/dropzone.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='dashboard/js/pages/playout.js') }}"></script>
+
+    <script>
+
+    </script>
 {% endblock %}

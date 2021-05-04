@@ -20,3 +20,5 @@ class Config:
 
     REDIS_HOST = environ.get('REDIS_HOST')
     REDIS_PORT = environ.get('REDIS_PORT')
+
+    UPLOAD_FOLDER = 'static/files'
