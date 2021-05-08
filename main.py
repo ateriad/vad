@@ -31,6 +31,22 @@ def playout():
     return render_template('dashboard/playout.html', current_user=current_user)
 
 
+@main.route('/dashboard/streams', methods=['POST'])
+@login_required
+def stream_store():
+    if request.method == 'POST':
+        output = request.form.get('output_stream_url')
+        input = request.form.get('input_stream_url')
+        ad_path = request.form.get('ad_path')
+        coordinate = request.form.getlist('coordinate[tl]')
+
+        print('coordinate', coordinate)
+
+        return jsonify({
+            'coordinate': coordinate,
+        })
+
+
 @login_required
 @main.route('/upload/file', methods=['POST'])
 def upload_file():
@@ -64,4 +80,3 @@ app = create_app()
 if __name__ == '__main__':
     db.create_all(app=create_app())
     app.run(debug=True, host='0.0.0.0')
-

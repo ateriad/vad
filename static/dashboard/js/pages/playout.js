@@ -1,6 +1,11 @@
 "use strict";
 
 let Playout = function () {
+    let submitBtnElm = $('#submit_btn');
+
+    let inputStreamUrlElm = $('#input_stream_url');
+    let outputStreamUrlElm = $('#output_stream_url');
+    let adPathElm = $('#ad_path');
 
     let myDropzone = new Dropzone("#dropzone", {
         url: $('#dropzone').data('action'),
@@ -27,6 +32,7 @@ let Playout = function () {
 
             this.on("removedfile", function (file) {
                 $('#ad_path').val('');
+                submitBtnElm.hide();
             });
 
             this.on("success", function (file, responseText) {
@@ -40,12 +46,6 @@ let Playout = function () {
         }
     });
 
-    let startBtnElm = $('#start_btn');
-
-    let inputStreamUrlElm = $('#input_stream_url');
-    let outputStreamUrlElm = $('#output_stream_url');
-    let adPathElm = $('#ad_path');
-
     $('#input_stream_url, #output_stream_url, #ad_path').on('change', function () {
         let input = inputStreamUrlElm.val();
         let output = outputStreamUrlElm.val();
@@ -55,14 +55,36 @@ let Playout = function () {
             inputStreamUrlElm.hide();
             outputStreamUrlElm.hide();
 
-            startBtnElm.show();
-
+            submitBtnElm.show();
 
         } else {
-            startBtnElm.hide();
+            submitBtnElm.hide();
         }
 
     })
+
+    $(".touchspin-vertical").TouchSpin({
+        min: 0,
+        max: 1000000000,
+    });
+
+    $('#form').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+
+    });
 
     let _init = function () {
 

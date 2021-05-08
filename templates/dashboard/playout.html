@@ -3,6 +3,9 @@
 {% block style %}
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/dropzone.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/basic.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='dashboard/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+
 {% endblock %}
 
 {% block title %}
@@ -11,7 +14,7 @@
 
 {% block content %}
     <section>
-        <form>
+        <form id="form" action="{{ url_for('main.stream_store') }}">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="card invoice-action-wrapper shadow-none border">
@@ -20,7 +23,7 @@
 
                             <fieldset class="form-group">
                                 <label for="input_stream_url">stream url</label>
-                                <input type="text" class="form-control" id="input_stream_url"
+                                <input type="text" class="form-control" name="input_stream_url" id="input_stream_url"
                                        placeholder="آدرس استریم را وارد کنید">
                             </fieldset>
 
@@ -35,7 +38,7 @@
 
                             <fieldset class="form-group">
                                 <label for="output_stream_url">stream url</label>
-                                <input type="text" class="form-control" id="output_stream_url"
+                                <input type="text" class="form-control" name="output_stream_url" id="output_stream_url"
                                        placeholder="آدرس استریم را وارد کنید">
                             </fieldset>
 
@@ -60,12 +63,59 @@
                             </div>
 
                             <input type="hidden" name="ad_path" id="ad_path">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3>گوشه بالا چپ</h3>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[tl][x]" class="touchspin-vertical"
+                                               value="10" data-bts-postfix="x">
+                                    </div>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[tl][y]" class="touchspin-vertical"
+                                               value="10" data-bts-postfix="y">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3>گوشه بالا راست</h3>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[tr][x]" class="touchspin-vertical"
+                                               value="40" data-bts-postfix="x">
+                                    </div>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[tr][y]" class="touchspin-vertical"
+                                               value="10" data-bts-postfix="y">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3>گوشه پایین چپ</h3>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[bl][x]" class="touchspin-vertical"
+                                               value="20" data-bts-postfix="x">
+                                    </div>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[bl][y]" class="touchspin-vertical"
+                                               value="10" data-bts-postfix="y">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h3>گوشه پایین راست</h3>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[br][x]" class="touchspin-vertical"
+                                               value="20" data-bts-postfix="x">
+                                    </div>
+                                    <div class="d-inline-block mb-1 mr-1">
+                                        <input type="text" name="coordinate[br][y]" class="touchspin-vertical"
+                                               value="40" data-bts-postfix="y">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mb-4 text-center">
-                <button type="button" class="btn btn-primary btn-lg round mr-1 mb-1" id="start_btn"
+                <button type="submit" class="btn btn-primary btn-lg round mr-1 mb-1" id="submit_btn"
                         style="display: none">
                     شروع
                 </button>
@@ -76,6 +126,7 @@
 
 {% block js %}
     <script src="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/dropzone.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
 
     <script src="{{ url_for('static', filename='dashboard/js/pages/playout.js') }}"></script>
 
