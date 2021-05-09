@@ -52,12 +52,14 @@ let Playout = function () {
         let ad_path = adPathElm.val();
 
         if (input !== '' && output !== '' && ad_path !== '') {
-            inputStreamUrlElm.hide();
-            outputStreamUrlElm.hide();
+            inputStreamUrlElm.prop('disabled', true);
+            outputStreamUrlElm.prop('disabled', true);
 
             submitBtnElm.show();
-
         } else {
+            inputStreamUrlElm.prop('disabled', false);
+            outputStreamUrlElm.prop('disabled', false);
+
             submitBtnElm.hide();
         }
 
