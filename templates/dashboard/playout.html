@@ -6,6 +6,29 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='dashboard/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/video-js/video-js.min.css') }}">
+    <style>
+        #input_container {
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #input_video {
+            width: 100%;
+            display: none;
+        }
+
+        #input_canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background-color: rgba(154, 169, 241, 0.23);
+            display: none;
+            cursor: crosshair;
+        }
+
+    </style>
 {% endblock %}
 
 {% block title %}
@@ -22,12 +45,22 @@
                             <h2>استریم ورودی</h2>
 
                             <fieldset class="form-group">
-                                <label for="input_stream_url">stream url</label>
-                                <input type="text" class="form-control" name="input_stream_url" id="input_stream_url"
-                                       placeholder="آدرس استریم را وارد کنید">
+                                <label for="input_rtmp_url">آدرس rtmp استریم</label>
+                                <input type="text" class="form-control" name="input_rtmp_url" id="input_rtmp_url"
+                                       placeholder="ex: rtmp:// ... " dir="ltr">
                             </fieldset>
 
-                            <div id="input_video"></div>
+                            <fieldset class="form-group">
+                                <label for="input_hls_url">آدرس hls استریم</label>
+                                <input type="text" class="form-control" name="input_hls_url" id="input_hls_url"
+                                       placeholder="ex: https:// ... " dir="ltr">
+                            </fieldset>
+
+                            <div id="input_container">
+                                <video id="input_video" class="video-js vjs-default-skin vjs-16-9" preload="auto">
+                                </video>
+                                <canvas id="input_canvas"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,9 +70,15 @@
                             <h2>استریم خروجی</h2>
 
                             <fieldset class="form-group">
-                                <label for="output_stream_url">stream url</label>
-                                <input type="text" class="form-control" name="output_stream_url" id="output_stream_url"
-                                       placeholder="آدرس استریم را وارد کنید">
+                                <label for="output_rtmp_url">آدرس rtmp استریم</label>
+                                <input type="text" class="form-control" name="output_rtmp_url" id="output_rtmp_url"
+                                       placeholder="ex: rtmp:// ... " dir="ltr">
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label for="output_hls_url">آدرس hls استریم</label>
+                                <input type="text" class="form-control" name="output_hls_url" id="output_hls_url"
+                                       placeholder="ex: https:// ... " dir="ltr">
                             </fieldset>
 
                             <div id="output_video"></div>
@@ -115,8 +154,7 @@
                 </div>
             </div>
             <div class="mb-4 text-center">
-                <button type="submit" class="btn btn-primary btn-lg round mr-1 mb-1" id="submit_btn"
-                        style="display: none">
+                <button type="submit" class="btn btn-primary btn-lg round mr-1 mb-1" id="submit_btn">
                     شروع
                 </button>
             </div>
@@ -127,6 +165,8 @@
 {% block js %}
     <script src="{{ url_for('static', filename='vendor/dropzone-5.7.0/min/dropzone.min.js') }}"></script>
     <script src="{{ url_for('static', filename='dashboard/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/video-js/video-js.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/video-js/videojs-http-streaming.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='dashboard/js/pages/playout.js') }}"></script>
 
