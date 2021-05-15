@@ -12,6 +12,20 @@ let Playout = function () {
     let outputVideoElm = $('#output_video');
     let inputCanvasElm = $('#input_canvas');
 
+    let cTlXElm = $('#coordinate_tl_x');
+    let cTlYElm = $('#coordinate_tl_y');
+
+    let cBlXElm = $('#coordinate_bl_x');
+    let cBlYElm = $('#coordinate_bl_y');
+
+    let cTrXElm = $('#coordinate_tr_x');
+    let cTrYElm = $('#coordinate_tr_y');
+
+    let cBrXElm = $('#coordinate_br_x');
+    let cBrYElm = $('#coordinate_br_y');
+
+    let factor = 1;
+
     let adPathElm = $('#ad_path');
 
     let _init = function () {
@@ -64,7 +78,43 @@ let Playout = function () {
         drawRect();
 
         function updateCoordinates(arr) {
-            console.log(arr)
+            arr.sort(function (a, b) {
+                return a[0] - b[0];
+            });
+
+            let l1 = arr[0]
+            let l2 = arr[1]
+            let r1 = arr[2]
+            let r2 = arr[3]
+
+            if (l1[1] < l2[1]) {
+                cTlXElm.val(Math.round(l2[0] * factor))
+                cTlYElm.val(Math.round(l2[1] * factor))
+
+                cBlXElm.val(Math.round(l1[0] * factor))
+                cBlYElm.val(Math.round(l1[1] * factor))
+            } else {
+                cTlXElm.val(Math.round(l2[0] * factor))
+                cTlYElm.val(Math.round(l2[1] * factor))
+
+                cBlXElm.val(Math.round(l1[0] * factor))
+                cBlYElm.val(Math.round(l1[1] * factor))
+            }
+
+            if (r1[1] < r2[1]) {
+                cTrXElm.val(Math.round(r2[0] * factor))
+                cTrYElm.val(Math.round(r2[1] * factor))
+
+                cBrXElm.val(Math.round(r1[0] * factor))
+                cBrYElm.val(Math.round(r1[1] * factor))
+            } else {
+                cTrXElm.val(Math.round(r2[0] * factor))
+                cTrYElm.val(Math.round(r2[1] * factor))
+
+                cBrXElm.val(Math.round(r1[0] * factor))
+                cBrYElm.val(Math.round(r1[1] * factor))
+            }
+
         }
 
         function drawRect() {
@@ -181,7 +231,9 @@ let Playout = function () {
                     - parseInt(style.getPropertyValue("padding-right"));
 
                 canvas.width = isOdd(parentWidth) ? parentWidth + 1 : parentWidth;
-                canvas.height = (my_video.videoHeight * canvas.width) / my_video.videoWidth;
+                factor = my_video.videoWidth / canvas.width;
+
+                canvas.height = my_video.videoHeight / factor;
             });
         }
 
