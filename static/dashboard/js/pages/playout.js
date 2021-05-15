@@ -157,19 +157,19 @@ let Playout = function () {
         function showInputVideo(inputHls) {
             inputVideoElm.css('display', 'block')
 
-            let player = videojs('input_video', {autoplay: 'any', muted: true});
+            let inputPlayer = videojs('input_video', {autoplay: 'any', muted: true});
 
-            // player.src({
+            // inputPlayer.src({
             //     src: inputHls,
             //     type: 'application/x-mpegURL',
             //     withCredentials: false
             // });
 
-            player.src({
+            inputPlayer.src({
                 src: 'https://dragbox.ir/storage/2/tennis_30.mp4',
             });
 
-            player.on('loadeddata', function () {
+            inputPlayer.on('loadeddata', function () {
                 inputCanvasElm.show()
 
                 const my_video = document.getElementById('input_video').getElementsByTagName('video')[0];
@@ -182,22 +182,38 @@ let Playout = function () {
 
                 canvas.width = isOdd(parentWidth) ? parentWidth + 1 : parentWidth;
                 canvas.height = (my_video.videoHeight * canvas.width) / my_video.videoWidth;
-
-                // (function loop() {
-                //     if (!my_video.paused && !my_video.ended) {
-                //         canvas.getContext('2d').drawImage(my_video, 0, 0, canvas.width, canvas.height);
-                //
-                //         setTimeout(loop, 1000 / 30); // drawing at 30fps
-                //     }
-                // })();
             });
         }
 
         inputHlsUrlElm.on('change', function () {
-            let inputHls = inputHlsUrlElm.val();
+            let value = this.value;
 
-            if (inputHls !== '') {
-                showInputVideo(inputHls)
+            if (value !== '') {
+                showInputVideo(value)
+            }
+        })
+
+        function showOutputVideo(outputHls) {
+            outputVideoElm.css('display', 'block')
+
+            let outputPlayer = videojs('output_video', {autoplay: 'any', muted: true});
+
+            outputPlayer.src({
+                src: outputHls,
+                type: 'application/x-mpegURL',
+                withCredentials: false
+            });
+
+            // outputPlayer.src({
+            //     src: 'https://dragbox.ir/storage/2/tennis_30.mp4',
+            // });
+        }
+
+        outputHlsUrlElm.on('change', function () {
+            let value = this.value;
+
+            if (value !== '') {
+                showOutputVideo(value)
             }
         })
 

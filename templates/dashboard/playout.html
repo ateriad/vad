@@ -28,6 +28,10 @@
             cursor: crosshair;
         }
 
+        #output_video {
+            width: 100%;
+            display: none;
+        }
     </style>
 {% endblock %}
 
@@ -81,7 +85,8 @@
                                        placeholder="ex: https:// ... " dir="ltr">
                             </fieldset>
 
-                            <div id="output_video"></div>
+                            <video id="output_video" class="video-js vjs-default-skin vjs-16-9" preload="auto" controls>
+                            </video>
                         </div>
                     </div>
                 </div>
