@@ -106,7 +106,6 @@
                         }
                     }, 1000);
                 }).fail(e => {
-                    console.log(e);
                     if (e.status === 422) {
                         let errors = e['responseJSON']['errors'];
                         for (let i in errors) {

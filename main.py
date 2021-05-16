@@ -6,6 +6,7 @@ from models import Streem
 from services.processor import va
 import os
 import time
+from services.validator import validate
 
 main = Blueprint('main', __name__)
 
@@ -37,6 +38,22 @@ def playout():
 @login_required
 def stream_store():
     if request.method == 'POST':
+        validate(request, {
+            "input_rtmp_url": ["required", "rtmp"],
+            "input_hls_url": ["required", "hls"],
+            "output_rtmp_url": ["required", "rtmp"],
+            "output_hls_url": ["required", "hls"],
+            "ad_path": ["required", "string"],
+            "coordinate_tl_x": ["required", "numeric"],
+            "coordinate_tl_y": ["required", "numeric"],
+            "coordinate_tr_x": ["required", "numeric"],
+            "coordinate_tr_y": ["required", "numeric"],
+            "coordinate_bl_x": ["required", "numeric"],
+            "coordinate_bl_y": ["required", "numeric"],
+            "coordinate_br_x": ["required", "numeric"],
+            "coordinate_br_y": ["required", "numeric"],
+        })
+
         input_rtmp = request.form.get('input_rtmp_url')
         input_hls = request.form.get('input_hls_url')
         output_rtmp = request.form.get('output_rtmp_url')

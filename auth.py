@@ -5,12 +5,17 @@ from __init__ import db
 from services.otp import otp_store, otp_check
 from services.sms import send_sms
 from os import environ
+from services.validator import validate
 
 auth = Blueprint('auth', __name__)
 
 
 @auth.route('/otp/request', methods=['POST'])
 def otp_request():
+    validate(request, {
+        "cellphone": ["string", "cellphone"],
+    })
+
     cellphone = request.form.get('cellphone')
     code = otp_store(cellphone)
 
@@ -37,6 +42,10 @@ def otp():
 
         return render_template('auth/otp.html')
     else:
+        validate(request, {
+            "cellphone": ["string", "cellphone"],
+        })
+
         cellphone = request.form.get('cellphone')
         code = request.form.get('otp')
 

@@ -243,15 +243,15 @@ let Playout = function () {
 
             let inputPlayer = videojs('input_video', {autoplay: 'any', muted: true});
 
-            // inputPlayer.src({
-            //     src: inputHls,
-            //     type: 'application/x-mpegURL',
-            //     withCredentials: false
-            // });
-
             inputPlayer.src({
-                src: 'https://dragbox.ir/storage/2/tennis_30.mp4',
+                src: inputHls,
+                type: 'application/x-mpegURL',
+                withCredentials: false
             });
+
+            // inputPlayer.src({
+            //     src: 'https://dragbox.ir/storage/2/tennis_30.mp4',
+            // });
 
             inputPlayer.on('loadeddata', function () {
                 inputCanvasElm.show()
@@ -322,6 +322,15 @@ let Playout = function () {
                 data: form.serialize(),
                 success: function (data) {
                     console.log(data);
+                }
+            }).fail(e => {
+                if (e.status === 422) {
+                    let errors = e['responseJSON']['errors'];
+                    for (let i in errors) {
+                        errorToastr(errors[i])
+                    }
+                } else {
+                    errorToastr(e['responseJSON']['message'])
                 }
             });
         });
