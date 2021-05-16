@@ -200,6 +200,40 @@ let Playout = function () {
             }
         }
 
+        $('#coordinate_tl_x, #coordinate_tl_y, #coordinate_bl_x, #coordinate_bl_y, #coordinate_tr_x, #coordinate_tr_y, #coordinate_br_x, #coordinate_br_y').on('change', function () {
+
+            let tlxC = cTlXElm.val();
+            let tlyC = cTlYElm.val();
+
+            let blxC = cBlXElm.val();
+            let blyC = cBlYElm.val();
+
+            let trxC = cTrXElm.val();
+            let tryC = cTrYElm.val();
+
+            let brxC = cBrXElm.val();
+            let bryC = cBrYElm.val();
+
+            if (tlxC !== '' && tlyC !== '' && blxC !== '' && blyC !== ''
+                && trxC !== '' && tryC !== '' && brxC !== '' && bryC !== '') {
+
+                let canvas = document.getElementById('input_canvas');
+                let context = canvas.getContext('2d');
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                context.beginPath();
+                context.moveTo(Math.round(tlxC / factor), Math.round(tlyC / factor));
+                context.lineTo(Math.round(blxC / factor), Math.round(blyC / factor));
+                context.lineTo(Math.round(trxC / factor), Math.round(tryC / factor));
+                context.lineTo(Math.round(brxC / factor), Math.round(bryC / factor));
+                context.lineTo(Math.round(tlxC / factor), Math.round(tlyC / factor));
+                context.strokeStyle = '#01052a';
+                context.lineWidth = 4;
+                context.stroke();
+            }
+        })
+
         function isOdd(num) {
             return num % 2;
         }
