@@ -40,6 +40,7 @@ class Streem(UserMixin, db.Model):
     tl = db.Column(db.String(100), nullable=False)
     br = db.Column(db.String(100), nullable=False)
     bl = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.Integer, default=0)
     created_at = db.Column(
         db.DateTime,
         default=datetime.now,
