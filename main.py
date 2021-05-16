@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, jsonify, make_response, u
 from flask_login import login_required, current_user
 from __init__ import create_app, db
 from werkzeug.utils import secure_filename
+from models import Streem
 from services.processor import va
 import os
 import time
@@ -36,15 +37,23 @@ def playout():
 @login_required
 def stream_store():
     if request.method == 'POST':
-        output_url = request.form.get('output_stream_url')
-        input_url = request.form.get('input_stream_url')
+        input_rtmp = request.form.get('input_rtmp_url')
+        input_hls = request.form.get('input_hls_url')
+        output_rtmp = request.form.get('output_rtmp_url')
+        output_hls = request.form.get('output_hls_url')
         ad_path = request.form.get('ad_path')
         tl = [request.form.get('coordinate_tl_x'), request.form.get('coordinate_tl_y'), ]
         tr = [request.form.get('coordinate_tr_x'), request.form.get('coordinate_tr_y'), ]
         bl = [request.form.get('coordinate_bl_x'), request.form.get('coordinate_bl_y'), ]
         br = [request.form.get('coordinate_br_x'), request.form.get('coordinate_br_y'), ]
 
-        va(input_url, output_url, ad_path, tl, tr, bl, br);
+        streem = Streem(user_id=current_user.id,
+                        input_rtmp=input_rtmp, input_hls=input_hls, output_rtmp=output_rtmp, output_hls=output_hls,
+                        ad=ad_path, tl=",".join(tl), tr=",".join(tr), bl=",".join(bl), br=",".join(br))
+        db.session.add(streem)
+        db.session.commit()
+
+        va(input_rtmp, output_rtmp, ad_path, tl, tr, bl, br);
 
         return jsonify({
             'message': 'success',

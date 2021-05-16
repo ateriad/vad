@@ -225,8 +225,8 @@ let Playout = function () {
                 context.beginPath();
                 context.moveTo(Math.round(tlxC / factor), Math.round(tlyC / factor));
                 context.lineTo(Math.round(blxC / factor), Math.round(blyC / factor));
-                context.lineTo(Math.round(trxC / factor), Math.round(tryC / factor));
                 context.lineTo(Math.round(brxC / factor), Math.round(bryC / factor));
+                context.lineTo(Math.round(trxC / factor), Math.round(tryC / factor));
                 context.lineTo(Math.round(tlxC / factor), Math.round(tlyC / factor));
                 context.strokeStyle = '#01052a';
                 context.lineWidth = 4;
