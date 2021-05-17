@@ -167,8 +167,14 @@
                 </div>
             </div>
             <div class="mb-4 text-center">
-                <button type="submit" class="btn btn-primary btn-lg round mr-1 mb-1" id="submit_btn">
+
+                <button type="submit" class="btn btn-primary btn-lg round mr-1 mb-1" id="submit_btn"
+                        style="display: {{ 'none' if stream.id else 'block' }}">
                     شروع
+                </button>
+                <button type="button" class="btn btn-danger btn-lg round mr-1 mb-1" id="stop_btn"
+                        style="display: {{ 'block' if stream.id else 'none' }}">
+                    توقف
                 </button>
             </div>
         </form>
@@ -184,6 +190,6 @@
     <script src="{{ url_for('static', filename='dashboard/js/pages/playout.js') }}"></script>
 
     <script>
-
+        let default_image = '{{ stream.ad }}'
     </script>
 {% endblock %}

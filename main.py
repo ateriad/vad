@@ -66,6 +66,17 @@ def stream_store():
         output_rtmp = request.form.get('output_rtmp_url')
         output_hls = request.form.get('output_hls_url')
         ad_path = request.form.get('ad_path')
+
+        old_path = app.config['UPLOAD_FOLDER'] + '/temp/' + ad_path
+        if os.path.isfile(old_path):
+            new_directory = app.config['UPLOAD_FOLDER'] + '/' + str(current_user.id)
+            if not os.path.exists(new_directory):
+                os.makedirs(new_directory)
+
+            os.rename(old_path, new_directory + '/' + ad_path)
+
+            ad_path = str(current_user.id) + '/' + ad_path
+
         tl = [request.form.get('coordinate_tl_x'), request.form.get('coordinate_tl_y'), ]
         tr = [request.form.get('coordinate_tr_x'), request.form.get('coordinate_tr_y'), ]
         bl = [request.form.get('coordinate_bl_x'), request.form.get('coordinate_bl_y'), ]
@@ -108,7 +119,7 @@ def upload_file():
 
         if file:
             filename = secure_filename(str(time.time()) + file.filename)
-            directory = app.config['UPLOAD_FOLDER'] + '/' + str(current_user.id)
+            directory = app.config['UPLOAD_FOLDER'] + '/temp'
 
             if not os.path.exists(directory):
                 os.makedirs(directory)

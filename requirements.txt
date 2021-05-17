@@ -11,3 +11,6 @@ python-dotenv
 MarkupSafe
 itsdangerous
 suds-jurko
+Pillow
+matplotlib
+opencv-python

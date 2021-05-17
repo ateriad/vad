@@ -2,6 +2,7 @@
 
 let Playout = function () {
     let submitBtnElm = $('#submit_btn');
+    let stopBtnElm = $('#stop_btn');
 
     let inputRtmpUrlElm = $('#input_rtmp_url');
     let inputHlsUrlElm = $('#input_hls_url');
@@ -29,7 +30,7 @@ let Playout = function () {
     let adPathElm = $('#ad_path');
 
     let _init = function () {
-        new Dropzone("#dropzone", {
+        let myDropzone = new Dropzone("#dropzone", {
             url: $('#dropzone').data('action'),
             method: 'post',
             headers: {
@@ -53,8 +54,8 @@ let Playout = function () {
                 });
 
                 this.on("removedfile", function (file) {
+                    this.removeAllFiles();
                     $('#ad_path').val('');
-                    submitBtnElm.hide();
                 });
 
                 this.on("success", function (file, responseText) {
@@ -67,6 +68,20 @@ let Playout = function () {
                 });
             }
         });
+
+        if (default_image !== '') {
+            let mockFile = {
+                name: default_image,
+                size: 0
+            };
+
+            myDropzone.options.addedfile.call(myDropzone, mockFile);
+            myDropzone.files.push(mockFile);
+            myDropzone.options.thumbnail.call(myDropzone, mockFile,
+                window.location.protocol + "//" + window.location.host + '/static/files/' + default_image);
+            myDropzone.emit("complete", mockFile);
+            // myDropzone.options.maxFiles = myDropzone.options.maxFiles - 1;
+        }
 
         $(".touchspin-vertical").TouchSpin({
             min: 0,
@@ -277,7 +292,7 @@ let Playout = function () {
             if (value !== '') {
                 showInputVideo(value)
             }
-        })
+        }).trigger('change')
 
         function showOutputVideo(outputHls) {
             outputVideoElm.css('display', 'block')
@@ -301,7 +316,7 @@ let Playout = function () {
             if (value !== '') {
                 showOutputVideo(value)
             }
-        })
+        }).trigger('change')
 
 
         $('#form').on('submit', function (e) {
@@ -321,7 +336,9 @@ let Playout = function () {
                 url: url,
                 data: form.serialize(),
                 success: function (data) {
-                    console.log(data);
+                    submitBtnElm.hide();
+                    stopBtnElm.show();
+                    successToastr(data['message']);
                 }
             }).fail(e => {
                 if (e.status === 422) {
