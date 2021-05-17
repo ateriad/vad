@@ -103,11 +103,11 @@ let Playout = function () {
             let r2 = arr[3]
 
             if (l1[1] < l2[1]) {
-                cTlXElm.val(Math.round(l2[0] * factor))
-                cTlYElm.val(Math.round(l2[1] * factor))
+                cTlXElm.val(Math.round(l1[0] * factor))
+                cTlYElm.val(Math.round(l1[1] * factor))
 
-                cBlXElm.val(Math.round(l1[0] * factor))
-                cBlYElm.val(Math.round(l1[1] * factor))
+                cBlXElm.val(Math.round(l2[0] * factor))
+                cBlYElm.val(Math.round(l2[1] * factor))
             } else {
                 cTlXElm.val(Math.round(l2[0] * factor))
                 cTlYElm.val(Math.round(l2[1] * factor))
@@ -117,11 +117,11 @@ let Playout = function () {
             }
 
             if (r1[1] < r2[1]) {
-                cTrXElm.val(Math.round(r2[0] * factor))
-                cTrYElm.val(Math.round(r2[1] * factor))
+                cTrXElm.val(Math.round(r1[0] * factor))
+                cTrYElm.val(Math.round(r1[1] * factor))
 
-                cBrXElm.val(Math.round(r1[0] * factor))
-                cBrYElm.val(Math.round(r1[1] * factor))
+                cBrXElm.val(Math.round(r2[0] * factor))
+                cBrYElm.val(Math.round(r2[1] * factor))
             } else {
                 cTrXElm.val(Math.round(r2[0] * factor))
                 cTrYElm.val(Math.round(r2[1] * factor))
