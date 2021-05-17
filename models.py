@@ -28,7 +28,7 @@ class User(UserMixin, db.Model):
     )
 
 
-class Streem(UserMixin, db.Model):
+class Stream(UserMixin, db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     user_id = db.Column(db.BigInteger, db.ForeignKey('user.id'), nullable=False)
     input_rtmp = db.Column(db.String(1000), nullable=False)
@@ -36,10 +36,7 @@ class Streem(UserMixin, db.Model):
     output_rtmp = db.Column(db.String(1000), nullable=False)
     output_hls = db.Column(db.String(1000), nullable=False)
     ad = db.Column(db.String(1000), nullable=False)
-    tr = db.Column(db.String(100), nullable=False)
-    tl = db.Column(db.String(100), nullable=False)
-    br = db.Column(db.String(100), nullable=False)
-    bl = db.Column(db.String(100), nullable=False)
+    coordinate = db.Column(db.TEXT, nullable=False)
     status = db.Column(db.Integer, default=0)
     created_at = db.Column(
         db.DateTime,

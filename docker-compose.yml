@@ -14,7 +14,7 @@ services:
       - mysql
 
   mysql:
-    image: mysql:5.7.31
+    image: ghcr.io/alimardani94/mysql:5.7.31
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=${DB_DATABASE:-app}
@@ -25,7 +25,7 @@ services:
       - ./docker/mysql:/var/lib/mysql
 
   redis:
-    image: redis:5.0-alpine3.8
+    image: ghcr.io/alimardani94/redis:5.0-alpine3.8
     restart: unless-stopped
     ports:
       - ${REDIS_EXPOSED_PORT:-0}:6379

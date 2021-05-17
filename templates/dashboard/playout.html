@@ -51,13 +51,13 @@
                             <fieldset class="form-group">
                                 <label for="input_rtmp_url">آدرس rtmp استریم</label>
                                 <input type="text" class="form-control" name="input_rtmp_url" id="input_rtmp_url"
-                                       placeholder="ex: rtmp:// ... " dir="ltr">
+                                       placeholder="ex: rtmp:// ... " dir="ltr" value="{{ stream.input_rtmp }}">
                             </fieldset>
 
                             <fieldset class="form-group">
                                 <label for="input_hls_url">آدرس hls استریم</label>
                                 <input type="text" class="form-control" name="input_hls_url" id="input_hls_url"
-                                       placeholder="ex: https:// ... " dir="ltr">
+                                       placeholder="ex: https:// ... " dir="ltr" value="{{ stream.input_hls }}">
                             </fieldset>
 
                             <div id="input_container">
@@ -76,13 +76,13 @@
                             <fieldset class="form-group">
                                 <label for="output_rtmp_url">آدرس rtmp استریم</label>
                                 <input type="text" class="form-control" name="output_rtmp_url" id="output_rtmp_url"
-                                       placeholder="ex: rtmp:// ... " dir="ltr">
+                                       placeholder="ex: rtmp:// ... " dir="ltr" value="{{ stream.output_rtmp }}">
                             </fieldset>
 
                             <fieldset class="form-group">
                                 <label for="output_hls_url">آدرس hls استریم</label>
                                 <input type="text" class="form-control" name="output_hls_url" id="output_hls_url"
-                                       placeholder="ex: https:// ... " dir="ltr">
+                                       placeholder="ex: https:// ... " dir="ltr" value="{{ stream.output_hls }}">
                             </fieldset>
 
                             <video id="output_video" class="video-js vjs-default-skin vjs-16-9" preload="auto" controls>
@@ -106,52 +106,59 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="ad_path" id="ad_path">
+                            <input type="hidden" name="ad_path" id="ad_path" value="{{ stream.ad }}">
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h3>گوشه بالا چپ</h3>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_tl_x" name="coordinate_tl_x"
-                                               class="touchspin-vertical" value="10" data-bts-postfix="x">
+                                               class="touchspin-vertical" data-bts-postfix="x"
+                                               value="{{ coordinate['tl'][0] if coordinate['tl'] else 10 }}">
                                     </div>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_tl_y" name="coordinate_tl_y"
-                                               class="touchspin-vertical" value="10" data-bts-postfix="y">
+                                               class="touchspin-vertical" data-bts-postfix="y"
+                                               value="{{ coordinate['tl'][1] if coordinate['tl'] else 10 }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <h3>گوشه بالا راست</h3>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_tr_x" name="coordinate_tr_x"
-                                               class="touchspin-vertical" value="40" data-bts-postfix="x">
+                                               class="touchspin-vertical" data-bts-postfix="x"
+                                               value="{{ coordinate['tr'][0] if coordinate['tr'] else 40 }}">
                                     </div>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_tr_y" name="coordinate_tr_y"
-                                               class="touchspin-vertical" value="10" data-bts-postfix="y">
+                                               class="touchspin-vertical" data-bts-postfix="y"
+                                               value="{{ coordinate['tr'][1] if coordinate['tr'] else 10 }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <h3>گوشه پایین چپ</h3>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_bl_x" name="coordinate_bl_x"
-                                               class="touchspin-vertical" value="20" data-bts-postfix="x">
+                                               class="touchspin-vertical" data-bts-postfix="x"
+                                               value="{{ coordinate['bl'][0] if coordinate['bl'] else 20 }}">
                                     </div>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_bl_y" name="coordinate_bl_y"
-                                               class="touchspin-vertical"
-                                               value="40" data-bts-postfix="y">
+                                               class="touchspin-vertical" data-bts-postfix="y"
+                                               value="{{ coordinate['bl'][1] if coordinate['bl'] else 40 }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <h3>گوشه پایین راست</h3>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_br_x" name="coordinate_br_x"
-                                               class="touchspin-vertical" value="80" data-bts-postfix="x">
+                                               class="touchspin-vertical" data-bts-postfix="x"
+                                               value="{{ coordinate['br'][0] if coordinate['br'] else 80 }}">
                                     </div>
                                     <div class="d-inline-block mb-1 mr-1">
                                         <input type="text" id="coordinate_br_y" name="coordinate_br_y"
-                                               class="touchspin-vertical" value="40" data-bts-postfix="y">
+                                               class="touchspin-vertical" data-bts-postfix="y"
+                                               value="{{ coordinate['br'][1] if coordinate['br'] else 40 }}">
                                     </div>
                                 </div>
                             </div>

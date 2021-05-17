@@ -1,12 +1,14 @@
+import os
+import time
+import json
 from flask import Blueprint, render_template, request, jsonify, make_response, url_for
 from flask_login import login_required, current_user
 from __init__ import create_app, db
 from werkzeug.utils import secure_filename
-from models import Streem
+from models import Stream
 from services.processor import va
-import os
-import time
 from services.validator import validate
+from sqlalchemy import desc
 
 main = Blueprint('main', __name__)
 
@@ -31,7 +33,12 @@ def dashboard():
 @main.route('/dashboard/playout')
 @login_required
 def playout():
-    return render_template('dashboard/playout.html', current_user=current_user)
+    stream = Stream.query.filter_by(user_id=current_user.id).order_by(desc('updated_at')).first()
+    coordinate = {}
+    if stream is not None:
+        coordinate = json.loads(stream.coordinate)
+
+    return render_template('dashboard/playout.html', current_user=current_user, stream=stream, coordinate=coordinate)
 
 
 @main.route('/dashboard/streams', methods=['POST'])
@@ -64,10 +71,17 @@ def stream_store():
         bl = [request.form.get('coordinate_bl_x'), request.form.get('coordinate_bl_y'), ]
         br = [request.form.get('coordinate_br_x'), request.form.get('coordinate_br_y'), ]
 
-        streem = Streem(user_id=current_user.id,
+        coordinate = {
+            "tl": tl,
+            "tr": tr,
+            "bl": bl,
+            "br": br,
+        }
+
+        stream = Stream(user_id=current_user.id,
                         input_rtmp=input_rtmp, input_hls=input_hls, output_rtmp=output_rtmp, output_hls=output_hls,
-                        ad=ad_path, tl=",".join(tl), tr=",".join(tr), bl=",".join(bl), br=",".join(br))
-        db.session.add(streem)
+                        ad=ad_path, coordinate=json.dumps(coordinate))
+        db.session.add(stream)
         db.session.commit()
 
         va(input_rtmp, output_rtmp, ad_path, tl, tr, bl, br);
