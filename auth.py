@@ -20,7 +20,7 @@ def otp_request():
     code = otp_store(cellphone)
 
     if environ.get('FLASK_ENV') == 'production':
-        body = 'کد ورود به تبلیغات مجازی' + '\n' + 'Code: ' + str(code)
+        body = 'کد ورود به  نگاتور' + '\n' + 'Code: ' + str(code)
         send_sms(cellphone, body)
 
         return jsonify({

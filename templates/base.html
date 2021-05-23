@@ -1,53 +1,137 @@
 <!DOCTYPE html>
-<html>
-
+<html class="loading" lang="fa" data-textdirection="rtl" dir="rtl">
+<!-- BEGIN: Head-->
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Flask Auth Example</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>پلتفرم تبلیغات مجازی هوشمند نگاتور</title>
+    <link rel="shortcut icon" type="image/x-icon"
+          href="{{ url_for('static', filename='dashboard/images/ico/favicon.ico') }}">
+    <meta name="theme-color" content="#5A8DEE">
+    <meta name="csrf-token" content="">
+    <meta name="success" content="{{ session['success'] }}">
+    <meta name="error" content="{{ session['error'] }}">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/vendors/css/vendors.min.css') }}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/colors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard/css/components.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/themes/dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/toastr/toastr.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/toastr/custom.toast.css') }}">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/core/menu/menu-types/horizontal-menu.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='dashboard/css/main.css') }}">
+    {% block style %}{% endblock %}
+    <!-- END: Page CSS-->
 </head>
+<!-- END: Head-->
 
-<body>
-<section class="hero is-fullheight" style="background-color:#f5467d;">
+<!-- BEGIN: Body-->
+<body class="horizontal-layout horizontal-menu navbar-sticky 2-columns   footer-static  " data-open="hover"
+      data-menu="horizontal-menu" data-col="2-columns">
 
-    <div class="hero-head">
-        <nav class="navbar">
-            <div class="container">
-
-                <div id="navbarMenuHeroA" class="navbar-menu">
-                    <div class="navbar-end">
-                        <a href="{{ url_for('main.index') }}" class="navbar-item">
-                            Home
-                        </a>
+<!-- BEGIN: Header-->
+<nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-fixed bg-primary navbar-brand-center">
+    <div class="navbar-header d-xl-block d-none">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item"><a class="navbar-brand" href="{{ url_for('main.dashboard') }}">
+                <div class="brand-logo">
+                    <img class="logo" alt="logo"
+                         src="{{ url_for('static', filename='dashboard/images/logo/logo-light.png') }}">
+                </div>
+                <h2 class="brand-text mb-0">پلتفرم تبلیغات مجازی هوشمند نگاتور</h2></a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-wrapper">
+        <div class="navbar-container content">
+            <div class="navbar-collapse" id="navbar-mobile">
+                <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                    <ul class="nav navbar-nav">
                         {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('main.dashboard') }}" class="navbar-item">
-                            داشبورد
-                        </a>
+                            <li class="nav-item mobile-menu mr-auto">
+                                <a href="{{ url_for('main.dashboard') }}" class="nav-link nav-menu-main text-white font-size-large">
+                                    داشبورد
+                                </a>
+                            </li>
                         {% endif %}
+
                         {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.otp') }}" class="navbar-item">
-                            ورود
-                        </a>
+                            <li class="nav-item mobile-menu mr-auto">
+                                <a href="{{ url_for('auth.otp') }}" class="nav-link nav-menu-main text-white font-size-large">
+                                    ورود
+                                </a>
+                            </li>
                         {% endif %}
                         {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.sign_out') }}" class="navbar-item">
-                            Logout
-                        </a>
+                            <li class="nav-item mobile-menu mr-auto">
+                                <a href="{{ url_for('auth.sign_out') }}" class="nav-link nav-menu-main text-white font-size-large">
+                                    خروج
+                                </a>
+                            </li>
                         {% endif %}
-                    </div>
+                    </ul>
                 </div>
             </div>
-        </nav>
+        </div>
     </div>
 
-    <div class="hero-body">
-        <div class="container has-text-centered">
+</nav>
+<!-- END: Header-->
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper p-0" style="margin: 10px 0 0 0!important;">
+        <div class="content-header row">
+            {% block header %}{% endblock %}
+        </div>
+        <div class="content-body">
             {% block content %}{% endblock %}
         </div>
     </div>
-</section>
-</body>
+</div>
+<!-- END: Content-->
 
+
+<!-- BEGIN: Vendor JS-->
+<script src="{{ url_for('static', filename='dashboard/vendors/js/vendors.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/fonts/LivIconsEvo/js/LivIconsEvo.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/toastr/toastr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/toastr/custom.toastr.js') }}"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="{{ url_for('static', filename='dashboard/js/scripts/configs/horizontal-menu.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/core/app-menu.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/core/app.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/components.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/footer.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard/js/scripts/main.js') }}"></script>
+<!-- END: Theme JS-->
+
+{% block js %}{% endblock %}
+
+
+</body>
 </html>

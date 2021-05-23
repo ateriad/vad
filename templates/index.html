@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-    Virtual Advertising
-</h1>
-<h2 class="subtitle">
-    Ha ha ha :)
-</h2>
+    <div class="image" style="position:relative;text-align: center">
+        <img src="{{ url_for('static', filename='dashboard/images/home.png') }}" alt="نگاتور">
+        <h1 class="text p-1 text-white text-bold-700"
+            style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: 100%;background-color: #5a8deeb0">
+            پلتفرم تبلیغات مجازی هوشمند نگاتور
+        </h1>
+    </div>
 {% endblock %}
