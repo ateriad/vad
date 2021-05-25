@@ -6,7 +6,7 @@ let Playout = function () {
 
     let inputRtmpUrlElm = $('#input_rtmp_url');
     let inputHlsUrlElm = $('#input_hls_url');
-    let outputRtmpUrlElm = $('#output_stream_url');
+    let outputRtmpUrlElm = $('#output_rtmp_url');
     let outputHlsUrlElm = $('#output_hls_url');
 
     let inputVideoElm = $('#input_video');
@@ -87,6 +87,24 @@ let Playout = function () {
             min: 0,
             max: 1000000000,
         });
+
+
+        $('.set_input_channel').on('click', function () {
+            let rtmp = $(this).attr('data-rtmp');
+            let hls = $(this).attr('data-hls');
+
+            inputRtmpUrlElm.val(rtmp)
+            inputHlsUrlElm.val(hls)
+        })
+
+        $('.set_output_channel').on('click', function () {
+            let rtmp = $(this).attr('data-rtmp');
+            let hls = $(this).attr('data-hls');
+
+            outputRtmpUrlElm.val(rtmp)
+            outputHlsUrlElm.val(hls)
+        })
+
     }
 
     let _action = function () {

@@ -48,6 +48,12 @@
                         <div class="card-body">
                             <h2>استریم ورودی</h2>
 
+                            <div class="text-right">
+                                <button type="button" class="btn btn-sm btn-icon btn-primary m-0"
+                                        data-toggle="modal" data-target="#channels_list_input">
+                                    <i class="bx bx-bookmarks"></i>
+                                </button>
+                            </div>
                             <fieldset class="form-group">
                                 <label for="input_rtmp_url">آدرس rtmp استریم</label>
                                 <input type="text" class="form-control" name="input_rtmp_url" id="input_rtmp_url"
@@ -72,6 +78,13 @@
                     <div class="card invoice-action-wrapper shadow-none border">
                         <div class="card-body">
                             <h2>استریم خروجی</h2>
+
+                            <div class="text-right">
+                                <button type="button" class="btn btn-sm btn-icon btn-primary m-0"
+                                        data-toggle="modal" data-target="#channels_list_output">
+                                    <i class="bx bx-bookmarks"></i>
+                                </button>
+                            </div>
 
                             <fieldset class="form-group">
                                 <label for="output_rtmp_url">آدرس rtmp استریم</label>
@@ -179,6 +192,60 @@
             </div>
         </form>
     </section>
+
+    <div class="modal fade text-left" id="channels_list_input" tabindex="-1" role="dialog"
+         aria-labelledby="channels_list_label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="channels_list_label">انتخاب از میان کانال‌ها</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% for channel in channels %}
+                        <div>
+                            <a href="javascript:void(0)" class="set_input_channel"
+                               data-rtmp="{{ channel['rtmp_url'] }}" data-hls="{{ channel['hls_url'] }}">
+                                {{ channel['title'] }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-left" id="channels_list_output" tabindex="-1" role="dialog"
+         aria-labelledby="channels_list_label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="channels_list_label">انتخاب از میان کانال‌ها</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% for channel in channels %}
+                        <div>
+                            <a href="javascript:void(0)" class="set_output_channel"
+                               data-rtmp="{{ channel['rtmp_url'] }}" data-hls="{{ channel['hls_url'] }}">
+                                {{ channel['title'] }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block js %}

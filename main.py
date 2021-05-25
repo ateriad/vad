@@ -34,11 +34,14 @@ def dashboard():
 @login_required
 def playout():
     stream = Stream.query.filter_by(user_id=current_user.id).order_by(desc('updated_at')).first()
+    channels = Channel.query.filter_by(user_id=current_user.id).order_by(desc('updated_at')).all()
+
     coordinate = {}
     if stream is not None:
         coordinate = json.loads(stream.coordinate)
 
-    return render_template('dashboard/playout.html', current_user=current_user, stream=stream, coordinate=coordinate)
+    return render_template('dashboard/playout.html', current_user=current_user, stream=stream, coordinate=coordinate,
+                           channels=channels)
 
 
 @main.route('/dashboard/streams', methods=['POST'])
