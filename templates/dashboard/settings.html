@@ -1,0 +1,124 @@
+{% extends "dashboard/base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block title %}
+    تنظیمات
+{% endblock %}
+
+{% block content %}
+    <div class="row" id="basic-table">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h4 class="card-title">لیست کانال‌ها</h4>
+
+                        <button type="button" class="btn btn-outline-primary"
+                                data-toggle="modal" data-target="#modal_create">
+                            افزودن
+                        </button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="table-responsive">
+                        <table class="table mb-5">
+                            <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>rtmp url</th>
+                                <th>hls url</th>
+                                <th>عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for channel in channels %}
+                                <tr>
+                                    <td>{{ channel['title'] }}</td>
+                                    <td>{{ channel['rtmp_url'] }}</td>
+                                    <td>{{ channel['hls_url'] }}</td>
+                                    <td>
+                                        <div class="action">
+                                            <a href="" class="mr-1">
+                                                <i class="bx bx-trash-alt"></i>
+                                            </a>
+                                            <a href="" class="cursor-pointer">
+                                                <i class="bx bx-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-left" id="modal_create" tabindex="-1" role="dialog"
+         aria-labelledby="modal_create_label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="modal_create_label">افزودن کانال</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <form action="{{ url_for('main.channel_store') }}" method="post"
+                      class="create_channel_form">
+                    <div class="modal-body">
+                        <label for="channel_title">
+                            عنوان:
+                        </label>
+                        <div class="form-group">
+                            <input type="text" name="title" id="channel_title"
+                                   placeholder="عنوان"
+                                   class="form-control">
+                        </div>
+
+                        <label for="channel_rtmp_url">
+                            آدرس rtmp:
+                        </label>
+                        <div class="form-group">
+                            <input type="text" name="rtmp_url" id="channel_rtmp_url"
+                                   placeholder="rtmp url"
+                                   class="form-control">
+                        </div>
+
+                        <label for="channel_hls_url">
+                            آدرس hls:
+                        </label>
+                        <div class="form-group">
+                            <input type="text" name="hls_url" id="channel_hls_url"
+                                   placeholder="hls url"
+                                   class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">بستن</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            افزودن کانال
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/pages/settings.js') }}"></script>
+{% endblock %}

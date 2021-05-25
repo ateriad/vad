@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, jsonify, make_response, u
 from flask_login import login_required, current_user
 from __init__ import create_app, db
 from werkzeug.utils import secure_filename
-from models import Stream
+from models import Stream, Channel
 from services.processor import va
 from services.validator import validate
 from sqlalchemy import desc
@@ -96,6 +96,37 @@ def stream_store():
         db.session.commit()
 
         va(input_rtmp, output_rtmp, ad_path, tl, tr, bl, br);
+
+        return jsonify({
+            'message': 'success',
+        })
+
+
+@main.route('/dashboard/settings')
+@login_required
+def settings():
+    channels = Channel.query.filter_by(user_id=current_user.id).order_by(desc('updated_at')).all()
+
+    return render_template('dashboard/settings.html', current_user=current_user, channels=channels)
+
+
+@main.route('/dashboard/channels', methods=['POST'])
+@login_required
+def channel_store():
+    if request.method == 'POST':
+        validate(request, {
+            "title": ["required", "string"],
+            "rtmp_url": ["required", "rtmp"],
+            "hls_url": ["required", "hls"],
+        })
+
+        title = request.form.get('title')
+        rtmp_url = request.form.get('rtmp_url')
+        hls_url = request.form.get('hls_url')
+
+        channel = Channel(user_id=current_user.id, title=title, rtmp_url=rtmp_url, hls_url=hls_url)
+        db.session.add(channel)
+        db.session.commit()
 
         return jsonify({
             'message': 'success',

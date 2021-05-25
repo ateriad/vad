@@ -23,6 +23,7 @@ services:
       - 127.0.0.1:${DB_EXPOSED_PORT:-0}:3306
     volumes:
       - ./docker/mysql:/var/lib/mysql
+      - ./docker/mysql_custom.cnf:/etc/mysql/conf.d/custom.cnf
 
   redis:
     image: ghcr.io/alimardani94/redis:5.0-alpine3.8

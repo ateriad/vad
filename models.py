@@ -53,3 +53,26 @@ class Stream(UserMixin, db.Model):
         nullable=False,
         index=True
     )
+
+
+class Channel(UserMixin, db.Model):
+    id = db.Column(db.BigInteger, primary_key=True)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    rtmp_url = db.Column(db.String(1000), nullable=False)
+    hls_url = db.Column(db.String(1000), nullable=False)
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.now,
+        unique=False,
+        nullable=False,
+        index=True
+    )
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.now,
+        onupdate=datetime.now,
+        unique=False,
+        nullable=False,
+        index=True
+    )
