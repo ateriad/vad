@@ -6,7 +6,7 @@ import redis
 
 db = SQLAlchemy()
 
-redis = redis.Redis(host=Config.REDIS_HOST, port=Config.REDIS_PORT)
+redis = redis.Redis(host=Config.REDIS_HOST, port=Config.REDIS_PORT, decode_responses=True)
 
 
 def create_app():

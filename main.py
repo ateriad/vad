@@ -7,6 +7,7 @@ from __init__ import create_app, db
 from werkzeug.utils import secure_filename
 from models import Stream, Channel
 from services.processor import va
+from services.mirol import update_mirol_channel
 from services.validator import validate
 from sqlalchemy import desc
 
@@ -108,6 +109,8 @@ def stream_store():
 @main.route('/dashboard/settings')
 @login_required
 def settings():
+    update_mirol_channel(current_user)
+
     channels = Channel.query.filter_by(user_id=current_user.id).order_by(desc('updated_at')).all()
 
     return render_template('dashboard/settings.html', current_user=current_user, channels=channels)

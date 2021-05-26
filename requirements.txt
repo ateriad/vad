@@ -14,3 +14,4 @@ suds-jurko
 Pillow
 matplotlib
 opencv-python
+requests
