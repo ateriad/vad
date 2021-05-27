@@ -1,3 +1,4 @@
+import json
 import requests
 from os import environ
 from __init__ import redis
@@ -19,26 +20,31 @@ def login():
 
 
 def get_info(cellphone):
-    token = redis.get('mirol:access_token')
+    try:
+        token = redis.get('mirol:access_token')
 
-    if not token:
-        token = login()
+        if not token:
+            token = login()
 
-    response = requests.post('https://mirol.ir/api/servers/ateriad/get_stream_info?token=' + token, data={
-        'phone': cellphone
-    })
+        response = requests.post('https://mirol.ir/api/servers/ateriad/get_stream_info?token=' + token, data={
+            'phone': cellphone
+        })
 
-    return response.json()
+        return response.json()
+    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError) as e:
+        print('mirol connection error')
+        return {}
 
 
 def update_mirol_channel(user):
     info = get_info(user.cellphone)
 
-    rtmp_url = info['stream_url'] + '/' + info['stream_key']
+    if 'stream_url' in info and 'hls_link' in info:
+        rtmp_url = info['stream_url'] + '/' + info['stream_key']
 
-    channel = Channel.query.filter_by(user_id=user.id, rtmp_url=rtmp_url).first()
+        channel = Channel.query.filter_by(user_id=user.id, rtmp_url=rtmp_url).first()
 
-    if channel is None:
-        channel = Channel(user_id=user.id, title='mirol', rtmp_url=rtmp_url, hls_url=info['hls_link'])
-        db.session.add(channel)
-        db.session.commit()
+        if channel is None:
+            channel = Channel(user_id=user.id, title='mirol', rtmp_url=rtmp_url, hls_url=info['hls_link'])
+            db.session.add(channel)
+            db.session.commit()

@@ -139,6 +139,20 @@ def channel_store():
         })
 
 
+@main.route('/dashboard/channels/<channel_id>', methods=['DELETE'])
+@login_required
+def channel_delete(channel_id):
+    if request.method == 'DELETE':
+
+        channel = Channel.query.filter_by(id=channel_id).first()
+        db.session.delete(channel)
+        db.session.commit()
+
+        return jsonify({
+            'message': 'success',
+        })
+
+
 @login_required
 @main.route('/upload/file', methods=['POST'])
 def upload_file():
