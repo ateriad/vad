@@ -94,7 +94,7 @@ let Playout = function () {
             let hls = $(this).attr('data-hls');
 
             inputRtmpUrlElm.val(rtmp)
-            inputHlsUrlElm.val(hls)
+            inputHlsUrlElm.val(hls).trigger('change')
         })
 
         $('.set_output_channel').on('click', function () {
@@ -102,7 +102,7 @@ let Playout = function () {
             let hls = $(this).attr('data-hls');
 
             outputRtmpUrlElm.val(rtmp)
-            outputHlsUrlElm.val(hls)
+            outputHlsUrlElm.val(hls).trigger('change')
         })
 
     }

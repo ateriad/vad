@@ -35,8 +35,6 @@ def validate(request, rules_dict):
         val = request.form.get(key)
 
         for rule in rules:
-            print(rule + "(\"" + val + "\")", 'val')
-
             result = eval(rule + "(\"" + val + "\")")
 
             if result is False:
