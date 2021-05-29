@@ -17,7 +17,7 @@ let Settings = function () {
                 confirmButtonText: 'بله حذف شود!',
                 cancelButtonText: 'انصراف',
             }).then((result) => {
-                if (result) {
+                if (result.value) {
                     $.ajax({
                         type: "DELETE",
                         url: href,

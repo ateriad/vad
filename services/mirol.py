@@ -31,7 +31,7 @@ def get_info(cellphone):
         })
 
         return response.json()
-    except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError) as e:
+    except (requests.exceptions.ConnectionError, requests.exceptions.SSLError, json.decoder.JSONDecodeError) as e:
         print('mirol connection error')
         return {}
 
