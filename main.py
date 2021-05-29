@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from __init__ import create_app, db
 from werkzeug.utils import secure_filename
 from models import Stream, Channel
-from services.processor import va
+from services.processor import start, stop
 from services.mirol import update_mirol_channel
 from services.validator import validate
 from sqlalchemy import desc
@@ -99,7 +99,20 @@ def stream_store():
         db.session.add(stream)
         db.session.commit()
 
-        va(input_rtmp, output_rtmp, ad_path, tl, tr, bl, br);
+        start(input_rtmp, output_rtmp, ad_path, tl, tr, bl, br)
+
+        return jsonify({
+            'message': 'success',
+        })
+
+
+@main.route('/dashboard/streams/stop/<stream_id>', methods=['POST'])
+@login_required
+def stream_stop(stream_id):
+    if request.method == 'POST':
+        stream = Stream.query.filter_by(id=stream_id).first()
+
+        stop(stream)
 
         return jsonify({
             'message': 'success',
@@ -143,7 +156,6 @@ def channel_store():
 @login_required
 def channel_delete(channel_id):
     if request.method == 'DELETE':
-
         channel = Channel.query.filter_by(id=channel_id).first()
         db.session.delete(channel)
         db.session.commit()

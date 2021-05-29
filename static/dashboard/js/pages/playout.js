@@ -369,6 +369,25 @@ let Playout = function () {
                 }
             });
         });
+
+        stopBtnElm.on('click', function () {
+              $.ajax({
+                type: "POST",
+                url: stopStreamUrl,
+                success: function (data) {
+                   window.location.reload()
+                }
+            }).fail(e => {
+                if (e.status === 422) {
+                    let errors = e['responseJSON']['errors'];
+                    for (let i in errors) {
+                        errorToastr(errors[i])
+                    }
+                } else {
+                    errorToastr(e['responseJSON']['message'])
+                }
+            });
+        })
     }
 
     return {

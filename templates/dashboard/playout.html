@@ -258,5 +258,6 @@
 
     <script>
         let default_image = '{{ stream.ad }}'
+        let stopStreamUrl = '{{ url_for('main.stream_stop', stream_id=stream.id) }}'
     </script>
 {% endblock %}
